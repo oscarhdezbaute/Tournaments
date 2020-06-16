@@ -1,0 +1,33 @@
+﻿@model Tournaments.Web.Data.Entities.SportEntity
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h2>Sport</h2>
+
+<div>
+    <h4>Details</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Name)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Name)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.LogoPath)
+        </dt>
+        <dd>
+            @if (!string.IsNullOrEmpty(Model.LogoPath))
+            {
+                <img src="@Url.Content(Model.LogoPath)" alt="Image" style="width:100px;height:100px;max-width: 100%; height: auto;" />
+            }
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model.Id"  class="btn btn-warning">Edit</a> 
+    <a asp-action="Index"  class="btn btn-success">Back to List</a>
+</div>
