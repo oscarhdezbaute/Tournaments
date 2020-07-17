@@ -34,8 +34,10 @@ namespace Tournaments.Web
                 cfg.UseSqlServer(Configuration.GetConnectionString("TournamentsConnection"));
             });
 
+            services.AddTransient<SeedDb>();
             services.AddScoped<IImageHelper, ImageHelper>();
             services.AddScoped<IConverterHelper, ConverterHelper>();
+            services.AddScoped<ICombosHelper, CombosHelper>();
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
         }
 

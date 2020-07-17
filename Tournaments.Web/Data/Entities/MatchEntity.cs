@@ -8,7 +8,7 @@ namespace Tournaments.Web.Data.Entities
         public int Id { get; set; }
 
         [DataType(DataType.DateTime)]
-        [DisplayFormat(DataFormatString = "{0:yyyy/MM/dd hh:mm}", ApplyFormatInEditMode = false)]
+        [DisplayFormat(DataFormatString = "{0:yyyy/MM/dd HH:mm}", ApplyFormatInEditMode = false)]
         public DateTime Date { get; set; }
 
         public DateTime DateLocal => Date.ToLocalTime();
