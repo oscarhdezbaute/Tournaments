@@ -1,9 +1,10 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using Tournaments.Web.Data.Entities;
 
 namespace Tournaments.Web.Data
 {
-    public class DataContext : DbContext
+    public class DataContext : IdentityDbContext<UserEntity>
     {
         public DataContext(DbContextOptions<DataContext> options) : base(options)
         {
@@ -16,11 +17,13 @@ namespace Tournaments.Web.Data
 
         public DbSet<MatchEntity> Matches { get; set; }
 
+        public DbSet<PredictionEntity> Predictions { get; set; }
+
         public DbSet<TeamEntity> Teams { get; set; }
 
-        public DbSet<TournamentEntity> Tournaments { get; set; }
-
         public DbSet<SportEntity> Sports { get; set; }
+
+        public DbSet<TournamentEntity> Tournaments { get; set; }       
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

@@ -38,9 +38,10 @@ namespace Tournaments.Web.Data.Entities
         [Display(Name = "Logo")]
         public string LogoPath { get; set; }
 
-        public ICollection<GroupEntity> Groups { get; set; }
-
         public SportEntity Sport { get; set; }
+
+        public ICollection<GroupEntity> Groups { get; set; }
+        
     }
 
 }

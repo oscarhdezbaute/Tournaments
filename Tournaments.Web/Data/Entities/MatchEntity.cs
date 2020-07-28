@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace Tournaments.Web.Data.Entities
@@ -18,15 +19,16 @@ namespace Tournaments.Web.Data.Entities
         public TeamEntity Visitor { get; set; }
 
         [Display(Name = "Goals Local")]
-        public int GoalsLocal { get; set; }
+        public int? GoalsLocal { get; set; }
 
         [Display(Name = "Goals Visitor")]
-        public int GoalsVisitor { get; set; }
+        public int? GoalsVisitor { get; set; }
 
         [Display(Name = "Is Closed?")]
         public bool IsClosed { get; set; }
 
         public GroupEntity Group { get; set; }
 
+        public ICollection<PredictionEntity> Predictions { get; set; }
     }
 }
