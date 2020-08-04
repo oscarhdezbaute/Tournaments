@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Linq;
@@ -10,6 +11,7 @@ using Tournaments.Web.Models;
 
 namespace Tournaments.Web.Controllers
 {
+    [Authorize(Roles = "Admin")]
     public class SportsController : Controller
     {
         private readonly DataContext _context;
