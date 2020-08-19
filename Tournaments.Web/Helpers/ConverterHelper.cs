@@ -1,4 +1,7 @@
-﻿using System.Threading.Tasks;
+﻿using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using Tournaments.Common.Models;
 using Tournaments.Web.Data;
 using Tournaments.Web.Data.Entities;
 using Tournaments.Web.Models;
@@ -81,7 +84,7 @@ namespace Tournaments.Web.Helpers
                 IsActive = tournamentEntity.IsActive,
                 LogoPath = tournamentEntity.LogoPath,
                 Name = tournamentEntity.Name,
-                StartDate = tournamentEntity.StartDate.ToLocalTime(),                
+                StartDate = tournamentEntity.StartDate.ToLocalTime(),
                 SportId = tournamentEntity.Sport.Id,
                 Sports = _combosHelper.GetComboSports()
             };
@@ -181,6 +184,106 @@ namespace Tournaments.Web.Helpers
             };
         }
 
+        public SportResponse ToSportResponse(SportEntity sportEntity)
+        {
+            return new SportResponse
+            {
+                Id = sportEntity.Id,
+                Name = sportEntity.Name,
+                LogoPath = sportEntity.LogoPath,
+                Tournaments = sportEntity.Tournaments?.Select(t => new TournamentResponse
+                {
+                    EndDate = t.EndDate,
+                    Id = t.Id,
+                    IsActive = t.IsActive,
+                    LogoPath = t.LogoPath,
+                    Name = t.Name,
+                    StartDate = t.StartDate,
+                    Groups = t.Groups?.Select(g => new GroupResponse
+                    {
+                        Id = g.Id,
+                        Name = g.Name,
+                        GroupDetails = g.GroupDetails?.Select(gd => new GroupDetailResponse
+                        {
+                            GoalsAgainst = gd.GoalsAgainst,
+                            GoalsFor = gd.GoalsFor,
+                            Id = gd.Id,
+                            MatchesLost = gd.MatchesLost,
+                            MatchesPlayed = gd.MatchesPlayed,
+                            MatchesTied = gd.MatchesTied,
+                            MatchesWon = gd.MatchesWon,
+                            Team = ToTeamResponse(gd.Team)
+                        }).ToList(),
+                        Matches = g.Matches?.Select(m => new MatchResponse
+                        {
+                            Date = m.Date,
+                            GoalsLocal = m.GoalsLocal,
+                            GoalsVisitor = m.GoalsVisitor,
+                            Id = m.Id,
+                            IsClosed = m.IsClosed,
+                            Local = ToTeamResponse(m.Local),
+                            Visitor = ToTeamResponse(m.Visitor),
+                            Predictions = m.Predictions?.Select(p => new PredictionResponse
+                            {
+                                GoalsLocal = p.GoalsLocal,
+                                GoalsVisitor = p.GoalsVisitor,
+                                Id = p.Id,
+                                Points = p.Points,
+                                User = ToUserResponse(p.User)
+                            }).ToList()
+                        }).ToList()
+                    }).ToList()
+                }).ToList()
+            };
+        }
+
+        public List<SportResponse> ToSportResponse(List<SportEntity> sportEntities)
+        {
+            List<SportResponse> list = new List<SportResponse>();
+            foreach (SportEntity sportEntity in sportEntities)
+            {
+                list.Add(ToSportResponse(sportEntity));
+            }
+
+            return list;
+        }
+
+        private UserResponse ToUserResponse(UserEntity user)
+        {
+            if (user == null)
+            {
+                return null;
+            }
+
+            return new UserResponse
+            {
+                Address = user.Address,
+                Document = user.Document,
+                Email = user.Email,
+                FirstName = user.FirstName,
+                Id = user.Id,
+                LastName = user.LastName,
+                PhoneNumber = user.PhoneNumber,
+                PicturePath = user.PicturePath,
+                Team = ToTeamResponse(user?.Team),
+                UserType = user.UserType
+            };
+        }
+
+        private TeamResponse ToTeamResponse(TeamEntity team)
+        {
+            if (team == null)
+            {
+                return null;
+            }
+
+            return new TeamResponse
+            {
+                Id = team.Id,
+                LogoPath = team.LogoPath,
+                Name = team.Name
+            };
+        }
 
     }
 }

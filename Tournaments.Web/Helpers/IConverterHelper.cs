@@ -1,4 +1,6 @@
-﻿using System.Threading.Tasks;
+﻿using System.Collections.Generic;
+using System.Threading.Tasks;
+using Tournaments.Common.Models;
 using Tournaments.Web.Data.Entities;
 using Tournaments.Web.Models;
 
@@ -17,7 +19,7 @@ namespace Tournaments.Web.Helpers
         Task<TournamentEntity> ToTournamentEntity(TournamentViewModel model, string path, bool isNew);
 
         TournamentViewModel ToTournamentViewModel(TournamentEntity tournamentEntity);
-        
+
         Task<GroupEntity> ToGroupEntityAsync(GroupViewModel model, bool isNew);
 
         GroupViewModel ToGroupViewModel(GroupEntity groupEntity);
@@ -30,6 +32,8 @@ namespace Tournaments.Web.Helpers
 
         MatchViewModel ToMatchViewModel(MatchEntity matchEntity);
 
+        SportResponse ToSportResponse(SportEntity sportEntity);
 
+        List<SportResponse> ToSportResponse(List<SportEntity> sportEntities);
     }
 }
